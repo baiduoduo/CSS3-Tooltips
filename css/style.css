@@ -1,0 +1,190 @@
+/*********公共***********/
+html{
+	width: 100%;/*设置html文档和显示器屏幕一样大*/
+	height: 100%;
+	/*屏幕旋转的时候文字大小不会改变了*/
+	-webkit-text-size-adjust:none; 
+	-moz-text-size-adjust:none;
+	-ms-text-size-adjust:none;
+	-o-text-size-adjust:none;
+	text-size-adjust:none;
+	/*background: red;*/
+}
+body{
+	margin: 0;
+	padding: 0;
+	width: 100%;/*设置了body的宽高和html的宽高和显示窗口屏幕一样大，但是body比html低了16px*/
+	height: 100%;
+	background:#47c9af;
+	color: #74777b;
+	font-size: 1.5em;
+	font-weight: 700;
+	font-family: "Raleway","Arail";
+}
+ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+a:link,a:visited,a:focus{
+	text-decoration: none;
+	outline: none;
+}
+/*任何元素，及任何元素内容前面、后面插入的的内容，都不要影响盒子的大小*/
+*,*:after,*:before{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+/*插入的内容都希望是块元素，内容为空*/
+*:after,*:before{
+	display: block;
+	content: "";
+}
+/*:after清除浮动*/
+*:after{
+	clear: both;
+}
+/****************导航***************/
+.nav{
+	width: 800px;
+	height: 300px;
+	margin: 200px auto;
+}
+.nav li{
+	display: inline-block;
+	margin: 0 1em;
+}
+/*a元素*/
+.tooltip{
+	display: inline-block;
+	font-weight: 700px;
+	color: rgba(0,0,0,0.3);
+	padding: 0.15em 0.25em 0 0;
+	position: relative;
+	z-index: 999;
+
+	/*background: pink;*/
+	/*文字透明度的变化*/
+	-webkit-transition:color 0.3s linear;
+	-transition:color 0.3s linear;
+}
+.tooltip:hover{
+	color: rgba(255,255,255,1);
+}
+/*气泡span*/
+.tooltip-content{
+	position: absolute;/*注意：在一个元素上定义了position: absolute;后自动转为块元素*/
+	z-index: 9999;
+	width: 80px;
+	height: 80px;
+	background: #fff;
+	border-radius: 50%;
+	left: 50%;
+	margin-left: -40px;
+	/*往上走，设置bottom
+	  bottom:0%；则说明子元素底部和父元素底部紧挨着
+	  bottom:100% 说明子元素底部与父元素拉开父元素的高度的距离
+	*/
+	bottom: 100%;/*span的底部距离a的底部是a高度一倍的距离,刚好在a的正上方;*/
+	margin-bottom: 20px;
+	text-align: center;
+	padding-top: 25px;
+	color: #47c9af;
+	opacity: 1;
+	/*谁的透明度发生了变化，就给谁加过渡效果*/ /*过渡transform*/
+	-webkit-transition:opacity 0.3s linear,transform 0.3s linear;
+	transition:opacity 0.3s linear,transform 0.3s linear;;
+}
+.tooltip .tooltip-content i{
+	opacity: 1;
+	/*谁的透明度发生了变化，就给谁加过渡效果*/
+	-webkit-transition:opacity 0.3s linear,transform 0.3s linear;;
+	transition:opacity 0.3s linear,transform 0.3s linear;;
+}
+/*在每个span的内容的后面插入尖尖*/
+.tooltip-content::after{
+	display: block;
+	content: "";
+	width: 30px;
+	height: 20px;
+	background:#f00 url(../img/tooltip.svg) no-repeat center center;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -15px;
+}
+/*第一个span*/
+.tooltip-effect-1 .tooltip-content{
+	/*
+	translate3d(x,y,z)，x,y,z表示平移的像素。3d属性可以开启移动端的硬件加速
+	rotate3d(x,y,x,angle)，x,y,z是0到1之间的系数（float型），
+			x,y,z三个参数则应该看成一个整体表示一个向量，
+			表示物体围绕向量[x,y,z]旋转。angle表示旋转的角度
+	scaled3d(x,y,z,flex)定义3d缩放
+	*/
+	-webkit-transform:translate3d(0,10px,0) rotate3d(1,1,1,45deg);
+	transform:translate3d(0,10px,0) rotate3d(1,1,1,45deg);
+	/*
+		-transform-origin定义旋转中心，只有在定义了transform才有意义。
+		默认为中心点 50% 50%
+	*/
+	-webkit-transform-origin:center bottom ;/*等价于50% 100%。中心点水平方向离左边50%，垂直方向距离图形100%*/
+	transform-origin:center bottom;
+
+}
+.tooltip-effect-1 .tooltip-content i{
+	/*定义缩放*/
+	-webkit-transform:scale3d(0,0,1);
+	transform:scale3d(0,0,1);
+}
+/*第二个span*/
+.tooltip-effect-2 .tooltip-content{
+	-webkit-transform:translate3d(0,20px,0);
+	transform:translate3d(0,20px,0);
+}
+.tooltip-effect-2 .tooltip-content i{
+	-webkit-transform:translate3d(0,15px,0);
+	transform:translate3d(0,15px,0);
+}
+/*第三个span*/
+.tooltip-effect-3 .tooltip-content{
+	-webkit-transform:translate3d(0,10px,0) rotate3d(0,1,0,90deg);
+	transform:translate3d(0,10px,0) rotate3d(0,1,0,90deg);
+	-webkit-transform-origin:50% 100% ;/*等价于50% 100%。中心点水平方向离左边50%，垂直方向距离图形100%*/
+	transform-origin:50% 100%;
+}
+.tooltip-effect-3 .tooltip-content i{
+	-webkit-transform:scale3d(0,0,1);/*初始缩放到0*/
+	transform:scale3d(0,0,1);
+}
+/*第四个span*/
+.tooltip-effect-4 .tooltip-content{
+	-webkit-transform:translate3d(0,-20px,0);
+	transform:translate3d(0,-20px,0);
+}
+.tooltip-effect-4 .tooltip-content i{
+	-webkit-transform:translate3d(0,20px,0);
+	transform:translate3d(0,20px,0);
+}
+/*第五个span*/
+.tooltip-effect-5 .tooltip-content{
+	-webkit-transform:scale3d(0,0,1);
+	transform:scale3d(0,0,1);
+	/*定中心*/
+	-webkit-transform-origin:50% 100%;
+	transform-origin:50% 100%;
+}
+.tooltip-effect-5 .tooltip-content i{
+	-webkit-transform:translate3d(0,20px,0);
+	transform:translate3d(0,20px,0);
+}
+/*鼠标滑过a */
+.tooltip:hover .tooltip-content,
+.tooltip:hover .tooltip-content i{
+	opacity: 1;
+							/*位置回来           不旋转了     不缩放了*/
+	-webkit-transform:translate3d(0,0,0) rotate3d(1,1,1,0) scale3d(1,1,1);
+}
